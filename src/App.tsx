@@ -2,24 +2,24 @@ import { useReducer, useState } from 'react'
 import './App.css'
 import { CounterWithFunc } from './components/CounterWithFunc'
 import { ActionTypes, TAction } from './types.app'
-
-const reducer = (state, action: TAction) => {
+const initialState = {
+  count: 0,
+}
+const reducer = (state: typeof initialState, action: TAction) => {
   switch (action.type) {
     case ActionTypes.INCREASE:
-      return {...state.count, count: state.count + action.payload} 
+      return {...state, count: state.count + action.payload} 
     case ActionTypes.DECREASE:
-      return state.count - 1
+      return {...state, count: state.count  - action.payload}
     default:
       return state;
   }
 }
 
-const initialState = {
-  count: 0,
-}
+
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const [count, setCount] = useState(0)
+
 console.log(state)
 
   return (

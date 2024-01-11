@@ -1,5 +1,6 @@
 import React, { FC,  } from "react";
-import { ActionTypes } from "../App";
+import { ActionTypes } from "../types.app";
+
 interface ICounterWithFuncProps { 
     dispatch: any,
     state: {
