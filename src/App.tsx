@@ -1,10 +1,9 @@
 
-import './App.css'
-import TodoApp from './components/TodoApp'
+
 function App() {
   return (
     <>
-      <TodoApp></TodoApp>
+      <h1>Think in a redux way</h1>
     </>
   )
 }
