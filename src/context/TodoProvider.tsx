@@ -1,36 +1,45 @@
-import React, { createContext, useReducer } from "react"
+import React, { createContext, useReducer } from 'react'
 
-export const TodoContext = createContext(undefined)
+type TTodo = {
+    id: string,
+    title: string,
+    isCompleted: boolean
+}
+type TAction ={
+    type: string,
+    payload: TTodo | string
+}
 
-type TTodoProps = {
+type TodoProviderProps = {
     children: React.ReactNode
 }
-
-
-  const initialState = {
-    name: "Todo",
-  }
-
-  const reducer = (state: typeof initialState, action)=>{
+export const TodoContext = createContext(undefined)
+const initialState:TTodo[] = []
+const reducer = (currentState :TTodo[], action:TAction)=>{
     switch (action.type) {
-        case 'submit':
-            
-            return {...state, name: action.payload}
-    
+        case "addTodo":
+            return [...currentState, action.payload]
+        case "taskComplete":
+            return currentState.map(todo =>todo.id ===action.payload?{...todo, isCompleted: !todo.isCompleted}: todo)
         default:
-            return state
+            currentState;
     }
-  }
-const TodoProvider = ({children}: TTodoProps)=>{
-    const [state, dispatch] = useReducer(reducer, initialState)
-    const todoValues = {
-        count: 3
+}
+const TodoProvider = ({children}:TodoProviderProps) => {
+const [state, dispatch] = useReducer(reducer, initialState)
+
+
+
+    const values = {
+        state,
+        dispatch
     }
-    return (
-        <TodoContext.Provider value={todoValues}>
-            {children}
-        </TodoContext.Provider>
-    )
+    console.log(state)
+  return (
+    <TodoContext.Provider value={values}>
+        {children}
+    </TodoContext.Provider>
+  )
 }
 
-export default TodoProvider;
+export default TodoProvider
